@@ -3,24 +3,20 @@ import "../styles/main.scss";
 import WOW from "wow.js";
 import "bootstrap";
 
-import Logo from '../images/logo/logo.svg';
-import Logo2 from '../images/logo/logo-2.svg';
-
+import Logo from "../images/logo/logo.svg";
+import Logo2 from "../images/logo/logo-2.svg";
 
 new WOW().init();
-
+const ud_header = document.querySelector(".ud-header");
+const logo = document.querySelector(".navbar-brand img");
+const sticky = ud_header.offsetTop;
+const submenuButton = document.querySelectorAll(".nav-item-has-children");
+const backToTop = document.querySelector(".back-to-top");
+let navbarToggler = document.querySelector(".navbar-toggler");
+const navbarCollapse = document.querySelector(".navbar-collapse");
 
 // ======= Sticky
 window.onscroll = function () {
-    const ud_header = document.querySelector(".ud-header");
-    const logo = document.querySelector(".navbar-brand img");
-    const sticky = ud_header.offsetTop;
-
-    if (ud_header.classList.contains("sticky")) {
-        logo.src = Logo2;
-    } else {
-        logo.src = Logo;
-    }
 
     if (window.pageYOffset > sticky) {
         ud_header.classList.add("sticky");
@@ -28,10 +24,12 @@ window.onscroll = function () {
         ud_header.classList.remove("sticky");
     }
 
-    // === logo change
+    if (ud_header.classList.contains("sticky")) {
+        logo.src = Logo2;
+    } else {
+        logo.src = Logo;
+    }
 
-    // show or hide the back-top-top button
-    const backToTop = document.querySelector(".back-to-top");
     if (
         document.body.scrollTop > 50 ||
         document.documentElement.scrollTop > 50
@@ -43,8 +41,6 @@ window.onscroll = function () {
 };
 
 //===== close navbar-collapse when a  clicked
-let navbarToggler = document.querySelector(".navbar-toggler");
-const navbarCollapse = document.querySelector(".navbar-collapse");
 
 document.querySelectorAll(".ud-menu-scroll").forEach((e) =>
     e.addEventListener("click", () => {
@@ -58,15 +54,12 @@ navbarToggler.addEventListener("click", function () {
 });
 
 // ===== submenu
-const submenuButton = document.querySelectorAll(".nav-item-has-children");
+
 submenuButton.forEach((elem) => {
     elem.querySelector("a").addEventListener("click", () => {
         elem.querySelector(".ud-submenu").classList.toggle("show");
     });
 });
-
-// ===== wow js
-// new WOW().init();
 
 // ====== scroll top js
 function scrollTo(element, to = 0, duration = 500) {

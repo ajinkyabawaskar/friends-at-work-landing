@@ -3,6 +3,16 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+
+let htmlPageNames = ['404', 'about', 'blog-details', 'blog', 'contact', 'login', 'pricing'];
+let multipleHtmlPlugins = htmlPageNames.map(name => {
+  return new HtmlWebpackPlugin({
+    template: Path.resolve(__dirname, `../src/${name}.html`), // relative path to the HTML files
+    filename: `${name}.html`, // output HTML files
+    // chunks: [`${name}`] // respective JS files
+  })
+});
+
 module.exports = {
   entry: {
     app: Path.resolve(__dirname, '../src/scripts/index.js'),
@@ -25,7 +35,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: Path.resolve(__dirname, '../src/index.html'),
     }),
-  ],
+  ].concat(multipleHtmlPlugins),
   resolve: {
     alias: {
       '~': Path.resolve(__dirname, '../src'),
